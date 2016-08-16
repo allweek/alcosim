@@ -1,0 +1,307 @@
+html, body {
+    margin: 0;
+	padding: 0;
+	font-family: Verdana;
+	font-size: 12px;
+}
+
+body {
+	background: url(../img/chizhik.jpg);
+	background-size: 100%;
+}
+
+h1 {
+	text-align: center;
+}
+
+.container {
+	margin: 20px 100px 0;
+	border: 1px solid rgba(256,256,256, 0.5);
+	border-radius: 5px;
+}
+
+.layout-positioner {
+	width: 900px;
+	margin: 20px auto;
+}
+
+.layout-positioner::after {
+	display: table;
+	content: "";
+	clear: both;
+}
+
+.blocks {
+    width: 400px;
+    height: 400px;
+	margin: 0 10px;
+    display: block;
+    float: left;
+	border: 1px solid black;
+}
+
+.block {
+	width: 100px;
+	height: 100px;
+	display: block;
+	float: left;
+	padding: 5px;
+	box-sizing: border-box;		
+	border: 2px solid black;
+	position: relative;
+	z-index: 10;	
+	font-weight: bold;
+	color: black;
+	word-wrap: break-word;
+}
+
+#img1 {
+	width: 96px;
+	height: 96px;	
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 5;
+	/*opacity: 0.7;*/
+}
+
+.img3[data-is="drink"] {
+	background: url(../img/drink.jpg);
+	background-size: cover;
+	width: 30px;
+	height: 30px;	
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	z-index: 15;	
+}
+
+.img3[data-is="work"] {
+	background: url(../img/work.png);
+	background-size: cover;
+	width: 30px;
+	height: 30px;	
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	z-index: 15;	
+}
+
+.img3[data-is="sleep"] {
+	background: url(../img/sleep.png);
+	background-size: cover;
+	width: 30px;
+	height: 30px;	
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	z-index: 15;	
+}
+
+
+.img3[data-is="fail"] {
+	background: url(../img/fail.jpg);
+	background-size: cover;
+	width: 30px;
+	height: 30px;	
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	z-index: 15;	
+}
+
+.botname1 {
+	position: absolute;
+	z-index: 15;
+	top: 0;
+	left: 0;
+	text-shadow: 1px 1px 2px white;
+}
+
+.botinf {
+	position: absolute;
+	z-index: 15;	
+	top: 12px;
+	left: 0;
+	text-shadow: 1px 1px 2px white;
+}
+
+.sidebar {
+	width: 250px;
+	margin: 20px;
+    padding: 10px;
+	background: rgba(255,255,255, 0.9);
+    border-radius: 5px;
+	display: block;
+	float: left;
+}
+
+.sidebar .main {
+    text-align: center;
+    font-weight: 700;
+}
+
+.sidebar p {
+	margin: 0;
+	line-height: 18px;
+}
+
+.sidebar input {
+	width: 50px;
+	margin: 0 20px 0 0;
+}
+
+.sidebar .menu {
+	display: block;
+	float:left;
+	margin-right: 10px;
+}
+
+
+.sidebar .finance {
+	display: block;
+	float:left;
+}
+
+.logstat {
+	width: 1020px;
+	margin: 20px auto;
+	border: 2px solid grey;
+	border-radius: 5px;
+	background: grey;
+	opacity: 0.9;
+}
+
+.logstat::after {
+	display: table;
+	content: "";
+	clear: both;
+}
+
+.logstat .headline1 {
+	width: 509px;
+	border: 2px solid grey;
+	border-radius: 5px;
+	float: left;
+	display: block;
+	box-sizing: border-box;
+	padding: 5px;
+	background: whitesmoke;
+	font-weight: 700;
+	text-align: center;
+}
+
+.logstat .headline2 {
+	width: 508px;
+	border: 2px solid grey;
+	border-radius: 5px;
+	float: right;
+	display: block;
+	box-sizing: border-box;
+	padding: 5px;
+	background: whitesmoke;
+	font-weight: 700;
+	text-align: center;
+}
+
+.headline::after {
+	display: table;
+	content: "";
+	clear: both;
+}
+
+.log {
+	width: 509px;
+	height: 270px;
+	border: 2px solid grey;
+	border-radius: 5px;	
+	display: block;
+	float: left;
+	overflow: auto;
+	box-sizing: border-box;
+	padding: 0 10px;
+	background: whitesmoke;
+}
+
+
+
+.stat {
+	width: 508px;
+	height: 270px;
+	border: 2px solid grey;
+	border-radius: 5px;	
+	display: block;	
+	float: right;
+	box-sizing: border-box;
+	background: whitesmoke;
+	position: relative;
+}
+
+.statframe {
+	width: 400px;
+	margin: 40px 50px;
+	overflow: hidden;
+}
+
+ul {
+	width: 9999px;
+	height: 180px;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	transition: margin-left 500ms;
+}
+
+li {
+	display: inline-block;
+	position: relative;
+}
+
+.text {
+    display: block;
+    width: 100px;
+}
+
+#leftbutton {
+	/*background: url(left.png);
+	width: 45px;
+	height: 49px;*/
+	position: absolute;
+	top: 40%;
+	left: 0;
+	cursor: pointer;
+	font-size: 24px;
+	line-height: 24px;
+}
+
+#rightbutton {
+	/*background: url(right.png);
+	width: 45px;
+	height: 49px;*/
+	position: absolute;
+	top: 40%;
+	right: 0;
+	cursor: pointer;
+	font-size: 24px;
+	line-height: 24px;
+}
+
+.footer {
+	min-height: 20px;
+	background: lightgrey;
+	margin: 20px 0 0 0;
+	text-align: center;
+	padding: 3px;
+}
+
+.modals {
+	background: rgba(255,255,255,0.8);
+	z-index: 100;
+	width: 100%;
+	height: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	text-align: center;
+	padding: 200px 0;
+}

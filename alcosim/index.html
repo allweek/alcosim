@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <script src="js/jquery-1.12.4.js"></script>
+    <script src="js/respond.js"></script>
+	<script src="//vk.com/js/api/openapi.js" type="text/javascript"></script>
+	<script src="https://api.vk.com/method/friends.get?user_id=2347929&callback=callbackFunc"></script>
+	<script type="text/javascript">
+		VK.init({
+			apiId: 5526622
+		});
+	</script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+	<title>Alcosim</title>
+</head>
+<body>
+    <header>
+		<h1>Alcosim</h1>
+	</header>
+	<div class="container">
+		<div class="layout-positioner">
+			<div class="blocks">
+				<div id="viewport">
+				</div>
+			</div>
+			<div class="sidebar">
+				<p class="main">Вводные данные</p>
+				<p>Макс. объем потребления, л.:</p>
+				<input id="max_volume" type="number">
+			</div>
+			<div class="sidebar">
+				<p class="main" id="barname"></p>
+				<div class="menu">
+					<p class="main">Меню</p>
+					<p>Пиво(500 мл), руб.:</p>
+					<input id="bottle_price" type="number">
+					<p>Водка(100 г), руб.</p>
+					<input id="shot_price" type="number">
+					<p>Текила(100 г), руб.</p>
+					<input id="teq_price" type="number">
+					<div id="timer">00</div>
+				</div>
+				<div class="finance">
+					<p class="main">Показатели</p>
+					<p>Выручка в кассе</p>
+					<div id="gross">0</div>
+					<p>Тек. затраты</p>
+					<div id="costs">0</div>
+					<p>Итого прибыль:</p>
+					<div id="net_profit_total">0</div>
+					<p>Итого затраты:</p>
+					<div id="costs_total">0</div>
+				</div>
+			</div>
+		</div>
+		<div class="logstat">
+			<div class="headline">
+				<div class="headline1">
+					<p>Лог</p>
+				</div>
+				<div class="headline2">
+					<p>Статистика</p>
+				</div>
+			</div>
+			<div class="log">
+			</div>
+			<div class="stat">
+				<button type="button" id="leftbutton">⇦</button>
+				<button type="button" id="rightbutton">⇨</button>
+				<div class="statframe">
+					<ul id="statlist">
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="footer">
+     <p> Все права защищены. 2016</p>
+	</div>
+	<div class="modals">
+		<h2>Alcosim - симулятор, в котором боты зарабатывают чтобы пить в баре;)</h2>
+		<h2>Идёт загрузка...</h2><br>
+		<h2 id="preload"></h2>
+	</div>
+</body>
+</html>
