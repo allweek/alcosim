@@ -223,8 +223,6 @@ h1 {
 	background: whitesmoke;
 }
 
-
-
 .stat {
 	width: 508px;
 	height: 270px;
@@ -303,5 +301,11 @@ li {
 	top: 0;
 	left: 0;
 	text-align: center;
+	font-family: Verdana, SansSerif;
+	font-size: 24px;
 	padding: 200px 0;
+}
+
+.modals h2 {
+	font-size: 16px;
 }

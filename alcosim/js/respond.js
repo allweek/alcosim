@@ -1,5 +1,3 @@
-//начало алкобот
-
 function World(name) {
     var new_world = {
         name: name,
@@ -21,6 +19,7 @@ function World(name) {
             character.init();
             return character;
         },
+
         stop: function () {
             new_world.characters.forEach (function(elem) {
                 clearInterval(elem.interval_person);
@@ -51,7 +50,6 @@ function Character(name){
     this.drink_name = null; // название напитка
     this.world = null;
     this.interval_person;
-    this.randarray = [];
     this.j;
     return this;
 }
@@ -74,8 +72,6 @@ Character.prototype = {
         $('<p>'+time+' '+message+'</p>').appendTo('.log');
         //чтобы скролл у лога был внизу
         $('.log').scrollTop(99999);
-       /* var history = console[type](message);*/
-        //если тип "info" то вызовется console.info(message);
     },
     Gethistory: function (){
         this.log.forEach(function (elem){
@@ -93,10 +89,10 @@ Character.prototype = {
             if (this.count.litr >= this.max_volume) {
                 this.Log('Ты напился, иди спать ' + this.name, 'error');
                 $('body').append('<div class="modals"></div>');
-                $('.modals').text(this.name+' победил!');
+                $('.modals').text(this.name+' победил(-а)!');
                 this.block.find('.img3').attr('data-is', 'sleep');
-                this.block.find('.botinf').text(' напился и спит');
-                this.Log(this.name + ' проснулся полностью трезвый. ', 'info');
+                this.block.find('.botinf').text(': спит');
+                this.Log(this.name + ': проснулся полностью трезвый. ', 'info');
                 this.count.litr = 0;
                 this.world.stop();
             };
@@ -148,7 +144,7 @@ Character.prototype = {
             //проверка хватит ли денег хотя бы на 1 порцию выбранного напитка
             if (this.count.money >= this.drink_portion_price) {
                 this.block.find('.img3').attr('data-is', 'drink');               
-                this.block.find('.botinf').text('\n выпил');
+                this.block.find('.botinf').text('\n: пьёт');
                 //вычисляется макс. объем напитка который может купить бот
                 var max_volume_to_buy = Math.floor(this.count.money / this.drink_portion_price) * this.drink_volume;
                 //случайным образом выбирается кол-во порций которое купит бот и пересчитывается в литры
@@ -175,7 +171,7 @@ Character.prototype = {
                         this.drink_price = 0;
                         this.Log('Ты напился, иди спать ' + this.name, 'error');
                         this.block.find('.img3').attr('data-is', 'sleep');
-                        this.block.find('.botinf').text(' напился и спит');
+                        this.block.find('.botinf').text(': напился и спит');
                         this.Log(this.name + ' проснулся полностью трезвый. ', 'info');
                         this.count.litr = 0;
                     };
@@ -185,14 +181,14 @@ Character.prototype = {
                 this.drink_price = 0;
                 this.Log('У ' + this.name + ' нет хватает денег чтобы выпить '+this.drink_name+'. Пусть Проваливает!', 'error');
                 this.block.find('.img3').attr('data-is', 'fail');
-                this.block.find('.botinf').text(' не хватает $');
+                this.block.find('.botinf').text(': не хватает $');
             };
         } else {
             //если chance < 30 бот не пьет
             this.drink_price = 0;
-            this.Log(this.name + ' решил не бухать.', 'info');
+            this.Log(this.name + ' не пьёт', 'info');
             this.block.find('.img3').attr('data-is', 'work');
-            this.block.find('.botinf').text(' решил не бухать');
+            this.block.find('.botinf').text(': не пьёт');
             
         };
         this.charstat.find('.balance').text(this.count.money);
@@ -205,34 +201,58 @@ Character.prototype = {
         var self = this;
         var preload = $('#preload');
         var circle = function () {
-            self.j = Math.floor(Math.random()*189);
-            VK.Api.call('friends.get', {user_id: 2347929, fields: 'photo_100, photo_50, first_name, last_name, sex'}, function(r) {
-                if(r.response) {
-                    self.block.find('#img1').attr('src', r.response[self.j].photo_100);
-                    self.charstat.find('#img2').attr('src', r.response[self.j].photo_50);
-                    self.block.find('.botname1').text(r.response[self.j].last_name);
-                    self.charstat.find('.botname2').text(r.response[self.j].first_name);
-                    self.charstat.find('.lastname').text(r.response[self.j].last_name);
-                    self.name = r.response[self.j].last_name;
-                    if (r.response[self.j].sex == 2) {
-                    self.charstat.find('.sex').text('Муж.');
+            //запрос на подгрузку списка друзей
+            $.ajax({
+                url: 'https://api.vk.com/method/friends.get?user_id=2347929',
+                method: 'GET',
+                dataType: 'JSONP',
+                success: function (data) {
+                    if (data.response) {
+                        var randarray = data.response; //массив со списком id друзей
+                        self.j = Math.floor(Math.random() * (randarray.length + 1));
+                        var friendid = randarray[(self.j)]; //рандомный id
+                        cirle2(friendid);
                     } else {
-                        self.charstat.find('.sex').text('Жен.');
+                        circle();
                     };
-                    self.world.y++;
-                    preload.text(self.world.y + ' из 16 ботов запущено');
-                    start();
-                    if (self.world.y == 16) {
-                        $('.modals').remove();
-                    };
-                } else {
-                    setTimeout(function () {
-                    circle();
-                    }, 400);
-                };
+                }
             });
         };
         circle();
+        var cirle2 = function (friendid) {
+            //подгружаются данные пользователя из вконтакте
+            $.ajax({
+                url: 'https://api.vk.com/method/users.get?user_ids=' + friendid + '&fields=photo_100,photo_50,sex&v=5.53',
+                method: 'GET',
+                dataType: 'JSONP',
+                success: function (r) {
+                    setTimeout(function () {
+                        if (r.response) {
+                            self.block.find('#img1').attr('src', r.response[0].photo_100);
+                            self.charstat.find('#img2').attr('src', r.response[0].photo_50);
+                            self.block.find('.botname1').text(r.response[0].last_name);
+                            self.charstat.find('.botname2').text(r.response[0].first_name);
+                            self.charstat.find('.lastname').text(r.response[0].last_name);
+                            self.name = r.response[0].last_name;
+                            if (r.response[0].sex == 2) {
+                                self.charstat.find('.sex').text('Муж.');
+                            } else {
+                                self.charstat.find('.sex').text('Жен.');
+                            };
+                            self.world.y++;
+                            preload.text(self.world.y + ' из 16 ботов запущено');
+                            start();
+                            if (self.world.y == 16) {
+                                $('.modals').remove();
+                            }
+                            ;
+                        } else {
+                            circle2();
+                        }
+                    }, 100);
+                }
+            });
+        };
 
         //определяется макс. объем выпитого для аклогоботов
         $('#max_volume').val(this.max_volume);
@@ -316,13 +336,15 @@ Bar.prototype = {
 };
 
 $(document).on('ready', function (){
-    var world = new World ('Мир');
+    var world = new World ('Мир'); //создание мира
 
     for (var i = 1; i <= 16; i++) {
-        world.CreateCharacter('Alcobot-'+i);
+        world.CreateCharacter('Alcobot-'+i); //создание персонажей
         console.error('Alcobot-'+i+' создан');
     };
-    var bar = new world.CreateBar('БАРРАКУДА');
+
+    var bar = new world.CreateBar('БАРРАКУДА'); //создание бара
+
     Timer ();
     Slider();
 
@@ -382,5 +404,7 @@ function Timer () {
         b = b + 1;
         $('#timer').text(b);
     }, 1000);
-
 };
+
+
+
